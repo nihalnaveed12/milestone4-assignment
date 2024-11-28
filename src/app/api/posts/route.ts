@@ -7,7 +7,7 @@ interface Post {
   body: string;
 }
 
-let posts: Post[] = [];
+const posts: Post[] = [];
 
 
 
@@ -28,10 +28,14 @@ export async function POST(req: NextRequest) {
     posts.unshift(newPost);
 
     return NextResponse.json(newPost, { status: 201 });
-  } catch (error) {
+  } catch {
     return NextResponse.json(
       { error: "Invalid request body" },
-      { status: 400 }
+      { status: 400 },
+    
     );
+
+    
+
   }
 }

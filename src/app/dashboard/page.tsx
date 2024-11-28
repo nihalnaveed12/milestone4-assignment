@@ -1,6 +1,8 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState ,useEffect} from "react";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 interface Post {
   userId: number;
@@ -11,9 +13,18 @@ interface Post {
 
 export default function Dashboard() {
   const [posts, setPosts] = useState<Post[]>([]);
-
+  const { data: session, status } = useSession();
+  const router = useRouter()
   const [title, setTitle] = useState<string>("");
   const [content, setContent] = useState<string>("");
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.push("/login"); 
+    }
+  }, [status, router]);
+
+  if (status === "loading") return <p>Loading...</p>;
 
   const handleAddPost = async () => {
     if (!title || !content) {
@@ -40,7 +51,7 @@ export default function Dashboard() {
 
   return (
     <div>
-      <h1 className="text-4xl font-bold text-center">Dashboard</h1>
+      <h1 className="text-4xl font-bold text-center">Welcome, {session?.user?.name}</h1>
       <div>
         <label htmlFor="title">Title:</label>
         <input
