@@ -3,8 +3,6 @@ import { signIn } from "next-auth/react";
 
 export default function Login() {
   
-  
-
   return (
     <div
       
@@ -14,7 +12,7 @@ export default function Login() {
       <div className="flex flex-col w-[20%] gap-4 items-center ">
         <button
           type="button"
-          onClick={() => signIn()}
+          onClick={() => signIn("google")}
           className="bg-zinc-50 px-2 py-1 w-24 text-zinc-900 hover:bg-zinc-200 rounded-lg"
         >
           Login
